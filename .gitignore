@@ -1,0 +1,47 @@
+# Frontend (Node.js/Vue)
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+
+# Backend (Go)
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/vendor/
+/bin/
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Archivos de video generados
+/backend/hls_test/*.ts
+/backend/hls_test/*.m3u8
+
+# Base de datos
+*.db
+*.sqlite
+postgres_data/
+
+# Otros
+.env.*
+!.env.example
+*.zip
+*.tar.gz
+
+# Mantener el directorio de assets
+!/backend/assets/segments.zip

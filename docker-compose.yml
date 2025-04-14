@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8080
+    depends_on:
+      - backend
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@database:5432/hlsapp
+      - PORT=8080
+      - BASE_PATH=/app/hls_test/
+      - MAX_SEGMENTS=3
+      - SEGMENT_DURATION=10.0
+      - LAST_SEGMENT_DURATION=4.566667
+      - TOTAL_SEGMENTS=64
+    volumes:
+      - ./backend/hls_test:/app/hls_test
+    depends_on:
+      - database
+
+  database:
+    container_name: database
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=hlsapp
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/db/migration.sql:/docker-entrypoint-initdb.d/migration.sql
+
+volumes:
+  postgres_data:
