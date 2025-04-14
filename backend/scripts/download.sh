@@ -4,7 +4,7 @@ echo "Descargando segmentos desde Google Drive..."
 cd /app/hls_test
 
 # Intentar descargar con diferentes métodos
-if ! gdown --fuzzy --no-cookies "$GOOGLE_DRIVE_URL"; then
+if ! gdown --fuzzy --no-cookies "https://drive.google.com/file/d/1exGq6BJ6r1lXezOanp88sWwxqcMbDntJ/view?usp=sharing"; then
     echo "Intento alternativo de descarga..."
     gdown --id "1exGq6BJ6r1lXezOanp88sWwxqcMbDntJ"
 fi

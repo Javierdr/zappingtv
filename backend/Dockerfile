@@ -6,7 +6,7 @@ RUN apk add --no-cache python3 py3-pip unzip
 WORKDIR /app
 
 # Instalar gdown con soporte de autenticación
-RUN pip install --no-cache-dir gdown
+RUN pip install --break-system-packages --no-cache-dir gdown
 
 # Copiar archivos de Go
 COPY go.mod go.sum ./
