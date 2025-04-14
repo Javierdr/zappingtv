@@ -29,8 +29,10 @@ func (h *VideoHandler) PlaylistHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *VideoHandler) ResetHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	h.manager.ResetSegmentList()
-	fmt.Fprintln(w, "Lista de segmentos reiniciada")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintln(w, `{"message": "Lista de segmentos reiniciada"}`)
 }
 
 func (h *VideoHandler) PreviousHandler(w http.ResponseWriter, r *http.Request) {

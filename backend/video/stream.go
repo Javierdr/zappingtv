@@ -69,29 +69,35 @@ func (sm *StreamManager) nextSegmentList() {
 }
 
 func (sm *StreamManager) ResetSegmentList() {
+	// Preparar el nuevo contexto antes de adquirir el mutex
+	ctx, cancel := context.WithCancel(context.Background())
+
 	sm.mu.Lock()
-	defer sm.mu.Unlock()
 	sm.segmentList = sm.initializeSegments(sm.config.MaxSegments)
 	sm.baseSequence++
 	sm.currentSegment = sm.config.MaxSegments
-
-	if sm.streamCancel != nil {
-		sm.streamCancel()
-	}
-
-	ctx, cancel := context.WithCancel(context.Background())
-	sm.streamCancel = cancel
+	sm.mu.Unlock()
+	sm.SetStreamCancel(cancel)
 	go sm.StartStream(ctx)
 }
 
 func (sm *StreamManager) PreviousSegment() {
 	sm.mu.Lock()
 	defer sm.mu.Unlock()
-	if sm.currentSegment <= sm.config.TotalSegments-1 {
+	if sm.currentSegment <= sm.config.TotalSegments-1 && sm.currentSegment > sm.config.MaxSegments {
 		sm.segmentList = append([]string{sm.formatSegment(sm.currentSegment - sm.config.MaxSegments - 1)}, sm.segmentList[:len(sm.segmentList)-1]...)
 		sm.baseSequence++
 		sm.currentSegment--
 	}
+}
+
+func (sm *StreamManager) SetStreamCancel(cancel context.CancelFunc) {
+	sm.mu.Lock()
+	defer sm.mu.Unlock()
+	if sm.streamCancel != nil {
+		sm.streamCancel()
+	}
+	sm.streamCancel = cancel
 }
 
 func (sm *StreamManager) writeHeader(builder *strings.Builder) {

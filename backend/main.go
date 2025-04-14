@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"hls_zappingtv/api"
 	"hls_zappingtv/auth"
@@ -12,6 +13,11 @@ import (
 func main() {
 	// Crear el stream manager
 	streamManager := video.NewStreamManager(&config.AppConfig)
+
+	// Iniciar el stream con un nuevo contexto
+	ctx, cancel := context.WithCancel(context.Background())
+	streamManager.SetStreamCancel(cancel)
+	go streamManager.StartStream(ctx)
 
 	// Crear los handlers
 	videoHandler := api.NewVideoHandler(streamManager)

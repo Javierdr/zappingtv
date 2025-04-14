@@ -28,7 +28,7 @@ func init() {
 	// Set base path
 	AppConfig.BasePath = os.Getenv("BASE_PATH")
 	if AppConfig.BasePath == "" {
-		AppConfig.BasePath = "./hls_test/"
+		AppConfig.BasePath = "./hls test/"
 	}
 
 	// Set max segments
