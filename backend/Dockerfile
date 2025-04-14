@@ -15,9 +15,8 @@ RUN go mod download
 # Copiar el código
 COPY . .
 
-# Crear directorio para los segmentos y darle permisos al script
-RUN mkdir -p /app/hls_test && \
-    chmod +x /app/scripts/download.sh
+# Darle permisos al script
+RUN chmod +x /app/scripts/download.sh
 
 # Descargar y preparar segmentos
 RUN /app/scripts/download.sh
