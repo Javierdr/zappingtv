@@ -28,8 +28,7 @@ services:
       - SEGMENT_DURATION=10.0
       - LAST_SEGMENT_DURATION=4.566667
       - TOTAL_SEGMENTS=64
-    volumes:
-      - ./backend/hls_test:/app/hls_test
+      - GOOGLE_DRIVE_URL=https://drive.google.com/file/d/1exGq6BJ6r1lXezOanp88sWwxqcMbDntJ/view?usp=sharing
     depends_on:
       - database
 
