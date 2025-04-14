@@ -9,10 +9,10 @@ if ! gdown --fuzzy --no-cookies "https://drive.google.com/file/d/1exGq6BJ6r1lXez
     gdown --id "1exGq6BJ6r1lXezOanp88sWwxqcMbDntJ"
 fi
 
-if [ -f segments.zip ]; then
+if [ -f "hls test.zip" ]; then
     echo "Descomprimiendo archivos..."
-    unzip segments.zip
-    rm segments.zip
+    unzip "hls test.zip"
+    rm hls test.zip
     echo "Segmentos preparados correctamente"
 else
     echo "Error: No se pudo descargar el archivo"
